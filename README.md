@@ -1,4 +1,4 @@
-# Blogango
+# Blogango [![Build Status](https://snap-ci.com/roselmamendes/blog-django/branch/master/build_image)](https://snap-ci.com/roselmamendes/blog-django/branch/master)
 
 * Python 3.4
 * Django 1.9
