@@ -9,6 +9,11 @@
 ````
 pip install -r requirements.txt
 ````
+## Test
+
+````
+python manage.py test
+````
 
 ## Run
 

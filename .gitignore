@@ -1,1 +1,5 @@
 ENV
+__pycache__/
+blog/blog/__pycache__/
+.idea
+*.pyc
