@@ -11,6 +11,7 @@ class Post(models.Model):
     created_on = models.DateTimeField(default=timezone.now())
     published_on = models.DateTimeField(null=True)
 
+
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments')
 
