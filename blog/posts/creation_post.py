@@ -27,3 +27,7 @@ class CreationPost:
             author=author,
             text=comment
         )
+
+    @staticmethod
+    def get_comments_from_post(post_id):
+        return Comment.objects.filter(post=post_id)

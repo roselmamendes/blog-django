@@ -87,9 +87,8 @@ class CreationPostTest(TestCase):
             'commentary'
         )
 
-        comment_db = Comment.objects.first()
+        [comment_db] = CreationPost.get_comments_from_post(post_db.id)
 
-        self.assertEqual(post_db.id, comment_db.post.id)
         self.assertEqual('author of the comment', comment_db.author)
         self.assertEqual('commentary', comment_db.text)
 
