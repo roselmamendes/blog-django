@@ -1,6 +1,6 @@
 from django.test import TestCase
 from posts.creation_post import CreationPost
-from posts.models import Post, Comment
+from posts.models import Post
 
 
 class CreationPostTest(TestCase):
