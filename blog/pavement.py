@@ -16,3 +16,8 @@ def migrate():
 @easy.task
 def test():
     sh('python manage.py test')
+
+
+@easy.task
+def run():
+    sh('python manage.py runserver')

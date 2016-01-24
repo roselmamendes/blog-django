@@ -2,6 +2,7 @@
 
 * Python 3.4
 * Django 1.9
+* Paver  1.2
 
 ## Start
 
@@ -13,13 +14,13 @@ pip install -r requirements.txt
 
 Go to blog folder and run:
 ````
-python manage.py test
+paver test
 ````
 
 ## Run
 
 ````
-python manage.py runserver
+paver run
 ````
 
 In your brownser open the url http://127.0.0.1:8000/.
