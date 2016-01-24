@@ -1,6 +1,6 @@
 from django.test import TestCase
 from posts.creation_post import CreationPost
-from posts.models import Post
+from posts.models import Post, Comment
 
 
 class CreationPostTest(TestCase):
@@ -8,7 +8,8 @@ class CreationPostTest(TestCase):
         CreationPost.create_draft(
             'title',
             'description',
-            'long text'
+            'long text',
+            'author'
         )
 
         posts_in_db = Post.objects.all()
@@ -19,13 +20,15 @@ class CreationPostTest(TestCase):
         self.assertEqual('title', post.title)
         self.assertEqual('description', post.description)
         self.assertEqual('long text', post.text)
+        self.assertEqual('author', post.author)
         self.assertIsNotNone(post.created_on)
 
-    def test_should_description_be_optional(self):
+    def test_should_description_be_optional_on_post(self):
         CreationPost.create_draft(
             'title',
             None,
-            'long text'
+            'long text',
+            'author'
         )
 
         posts_in_db = Post.objects.all()
@@ -34,6 +37,61 @@ class CreationPostTest(TestCase):
 
         post = posts_in_db.first()
         self.assertIsNotNone(post.created_on)
+
+    def test_should_not_allow_save_a_post_without_required_fields(self):
+        with self.assertRaises(Exception):
+            CreationPost.create_draft(
+                None,
+                'description',
+                None,
+                None
+            )
+
+    def test_should_publish_a_post(self):
+        CreationPost.create_draft(
+            'title',
+            'description',
+            'long text',
+            'author'
+        )
+        post_db = Post.objects.first()
+
+        CreationPost.publish(post_db.id)
+
+        post_db = Post.objects.first()
+
+        self.assertEqual(0, post_db.comments.count())
+        self.assertIsNotNone(post_db.published_on)
+
+    def test_should_not_allow_save_a_comment_without_post_related(self):
+        with self.assertRaises(Exception):
+            CreationPost.add_comment(
+                None,
+                'author',
+                'some text'
+            )
+
+    def test_should_add_a_comment_for_a_post(self):
+        CreationPost.create_draft(
+            'title',
+            'description',
+            'long text',
+            'author'
+        )
+        post_db = Post.objects.first()
+        CreationPost.publish(post_db.id)
+
+        CreationPost.add_comment(
+            post_db,
+            'author of the comment',
+            'commentary'
+        )
+
+        comment_db = Comment.objects.first()
+
+        self.assertEqual(post_db.id, comment_db.post.id)
+        self.assertEqual('author of the comment', comment_db.author)
+        self.assertEqual('commentary', comment_db.text)
 
     # draft post
     # publish post
