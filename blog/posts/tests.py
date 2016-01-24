@@ -24,7 +24,7 @@ class CreationPostTest(TestCase):
     def test_should_description_be_optional(self):
         CreationPost.create_draft(
             'title',
-             None,
+            None,
             'long text'
         )
 
